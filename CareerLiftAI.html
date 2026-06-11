@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareerLiftAI — AI Mock Interview Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --purple: #7C3AED;
+        --purple-light: #EDE9FE;
+        --purple-mid: #A78BFA;
+        --purple-dark: #4C1D95;
+        --teal: #0D9488;
+        --teal-light: #CCFBF1;
+        --coral: #DC2626;
+        --coral-light: #FEE2E2;
+        --amber: #D97706;
+        --amber-light: #FEF3C7;
+        --green: #059669;
+        --green-light: #D1FAE5;
+        --slate: #1E293B;
+        --slate-mid: #475569;
+        --slate-light: #94A3B8;
+        --bg: #F8FAFC;
+        --surface: #FFFFFF;
+        --border: #E2E8F0;
+        --border-strong: #CBD5E1;
+        --text: #0F172A;
+        --text-2: #334155;
+        --text-3: #64748B;
+        --radius: 12px;
+        --radius-sm: 8px;
+        --radius-lg: 16px;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: 'Inter', sans-serif;
+        line-height: 1.25;
+      }
+
+      button {
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+      }
+
+      input,
+      select,
+      textarea {
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+      }
+
+      .screen {
+        display: none;
+      }
+
+      .screen.active {
+        display: block;
+      }
+
+      /* ── HOME ─────────────────────────────────── */
+      #home {
+        min-height: 100vh;
+      }
+
+      .hero {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 64px 24px 40px;
+        text-align: center;
+      }
+
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--purple-light);
+        color: var(--purple-dark);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 5px 14px;
+        border-radius: 20px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+
+      .hero h1 {
+        font-family: 'Syne', sans-serif;
+        font-size: clamp(36px, 5vw, 60px);
+        font-weight: 800;
+        color: var(--slate);
+        line-height: 1.1;
+        margin-bottom: 20px;
+      }
+
+      .hero h1 span {
+        color: var(--purple);
+      }
+
+      .hero p {
+        font-size: 17px;
+        color: var(--text-3);
+        max-width: 500px;
+        margin: 0 auto 36px;
+        line-height: 1.75;
+      }
+
+      .btn-primary {
+        background: var(--purple);
+        color: #fff;
+        border: none;
+        padding: 14px 32px;
+        border-radius: var(--radius-sm);
+        font-size: 15px;
+        font-weight: 600;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-primary:hover {
+        background: #6D28D9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
+      }
+
+      .btn-secondary {
+        background: var(--surface);
+        color: var(--text-2);
+        border: 1px solid var(--border-strong);
+        padding: 12px 24px;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg);
+        border-color: var(--purple-mid);
+      }
+
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        max-width: 700px;
+        margin: 48px auto 56px;
+      }
+
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px;
+        text-align: center;
+      }
+
+      .stat-n {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--purple);
+        font-family: 'Syne', sans-serif;
+      }
+
+      .stat-l {
+        font-size: 12px;
+        color: var(--text-3);
+        margin-top: 3px;
+      }
+
+      .features-grid {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 0 24px 80px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+      }
+
+      .feat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        transition: all 0.2s;
+      }
+
+      .feat-card:hover {
+        border-color: var(--purple-mid);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .feat-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: var(--purple-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
+        color: var(--purple);
+        font-size: 20px;
+      }
+
+      .feat-card h3 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--slate);
+      }
+
+      .feat-card p {
+        font-size: 13px;
+        color: var(--text-3);
+        line-height: 1.65;
+      }
+
+      .occupation-strip {
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+        padding: 24px;
+        overflow: hidden;
+      }
+
+      .strip-inner {
+        display: flex;
+        gap: 10px;
+        animation: scroll-left 30s linear infinite;
+        width: max-content;
+      }
+
+      .strip-inner:hover {
+        animation-play-state: paused;
+      }
+
+      @keyframes scroll-left {
+        from {
+          transform: translateX(0)
+        }
+
+        to {
+          transform: translateX(-50%)
+        }
+      }
+
+      .occ-pill {
+        background: var(--purple-light);
+        color: var(--purple-dark);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      /* ── SETUP ────────────────────────────────── */
+      #setup {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+
+      .setup-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .setup-header h2 {
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .setup-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      @media (max-width: 700px) {
+        .setup-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-row {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+      }
+
+      .panel-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .role-search {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        outline: none;
+        margin-bottom: 10px;
+        transition: border-color 0.2s;
+      }
+
+      .role-search:focus {
+        border-color: var(--purple);
+      }
+
+      .cat-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+
+      .cat-tab {
+        padding: 4px 12px;
+        border-radius: 14px;
+        border: 1px solid var(--border-strong);
+        background: transparent;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text-3);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .cat-tab:hover {
+        border-color: var(--purple-mid);
+        color: var(--purple);
+      }
+
+      .cat-tab.active {
+        background: var(--purple);
+        color: #fff;
+        border-color: var(--purple);
+      }
+
+      .role-list {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+      }
+
+      .role-item {
+        padding: 9px 12px;
+        font-size: 13px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        transition: background 0.1s;
+      }
+
+      .role-item:last-child {
+        border-bottom: none;
+      }
+
+      .role-item:hover {
+        background: var(--purple-light);
+      }
+
+      .role-item.selected {
+        background: var(--purple);
+        color: #fff;
+      }
+
+      .role-item .cat-tag {
+        font-size: 10px;
+        opacity: 0.65;
+      }
+
+      .level-options {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .level-opt {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.15s;
+        font-size: 13px;
+      }
+
+      .level-opt:hover {
+        border-color: var(--purple-mid);
+      }
+
+      .level-opt.selected {
+        border-color: var(--purple);
+        background: var(--purple-light);
+        color: var(--purple-dark);
+        font-weight: 500;
+      }
+
+      .type-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+      }
+
+      .type-opt {
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        text-align: center;
+        transition: all 0.15s;
+        color: var(--text-2);
+      }
+
+      .type-opt:hover {
+        border-color: var(--purple-mid);
+      }
+
+      .type-opt.selected {
+        border-color: var(--purple);
+        background: var(--purple-light);
+        color: var(--purple-dark);
+      }
+
+      .resume-area {
+        width: 100%;
+        min-height: 90px;
+        padding: 10px 12px;
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        resize: vertical;
+        outline: none;
+        transition: border-color 0.2s;
+        line-height: 1.6;
+        color: var(--text);
+        background: var(--surface);
+      }
+
+      .resume-area:focus {
+        border-color: var(--purple);
+      }
+
+      .voice-toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        margin-top: 10px;
+      }
+
+      .toggle-track {
+        width: 40px;
+        height: 22px;
+        border-radius: 11px;
+        background: var(--border-strong);
+        position: relative;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .toggle-track.on {
+        background: var(--purple);
+      }
+
+      .toggle-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: left 0.2s;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      .toggle-track.on .toggle-thumb {
+        left: 20px;
+      }
+
+      .setup-footer {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .selection-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .pill {
+        padding: 4px 12px;
+        border-radius: 14px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .pill-p {
+        background: var(--purple-light);
+        color: var(--purple-dark);
+      }
+
+      .pill-t {
+        background: var(--teal-light);
+        color: var(--teal);
+      }
+
+      .pill-a {
+        background: var(--amber-light);
+        color: var(--amber);
+      }
+
+      /* ── INTERVIEW ────────────────────────────── */
+      #interview {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .iv-header {
+        padding: 14px 24px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+
+      .iv-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .ai-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--purple-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--purple);
+        font-size: 17px;
+      }
+
+      .iv-info h3 {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .iv-info p {
+        font-size: 12px;
+        color: var(--text-3);
+      }
+
+      .progress-bar-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .q-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--purple);
+        min-width: 36px;
+      }
+
+      .prog-track {
+        width: 120px;
+        height: 6px;
+        background: var(--border);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+
+      .prog-fill {
+        height: 100%;
+        background: var(--purple);
+        border-radius: 3px;
+        transition: width 0.4s ease;
+      }
+
+      .chat-area {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .msg {
+        display: flex;
+        gap: 10px;
+        max-width: 82%;
+        animation: msg-in 0.25s ease;
+      }
+
+      @keyframes msg-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .msg.user {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      .msg-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        margin-top: 2px;
+      }
+
+      .msg-avatar.ai {
+        background: var(--purple-light);
+        color: var(--purple);
+      }
+
+      .msg-avatar.user {
+        background: var(--slate);
+        color: #fff;
+      }
+
+      .msg-bubble {
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .msg-bubble.ai {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px 16px 16px 16px;
+        color: var(--text);
+      }
+
+      .msg-bubble.user {
+        background: var(--purple);
+        color: #fff;
+        border-radius: 16px 4px 16px 16px;
+      }
+
+      .msg-bubble .feedback-box {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: var(--teal-light);
+        border-left: 3px solid var(--teal);
+        border-radius: 6px;
+        font-size: 13px;
+        color: #0F5132;
+        line-height: 1.6;
+      }
+
+      .typing-dots {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        padding: 14px 18px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px 16px 16px 16px;
+        width: fit-content;
+      }
+
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--slate-light);
+        animation: typing 1.2s infinite;
+      }
+
+      .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typing {
+
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.5;
+        }
+
+        30% {
+          transform: translateY(-5px);
+          opacity: 1;
+        }
+      }
+
+      .input-area {
+        padding: 16px 24px;
+        border-top: 1px solid var(--border);
+        background: var(--surface);
+        flex-shrink: 0;
+      }
+
+      .input-row {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+      }
+
+      .answer-input {
+        flex: 1;
+        padding: 10px 14px;
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        resize: none;
+        min-height: 44px;
+        max-height: 120px;
+        outline: none;
+        transition: border-color 0.2s;
+        line-height: 1.6;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .answer-input:focus {
+        border-color: var(--purple);
+      }
+
+      .send-btn {
+        width: 44px;
+        height: 44px;
+        background: var(--purple);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+
+      .send-btn:hover:not(:disabled) {
+        background: #6D28D9;
+      }
+
+      .send-btn:disabled {
+        background: var(--border-strong);
+        cursor: not-allowed;
+      }
+
+      .mic-btn {
+        width: 44px;
+        height: 44px;
+        background: var(--surface);
+        color: var(--text-3);
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+
+      .mic-btn.listening {
+        background: var(--coral-light);
+        border-color: var(--coral);
+        color: var(--coral);
+        animation: pulse-ring 1.5s infinite;
+      }
+
+      @keyframes pulse-ring {
+
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.3)
+        }
+
+        50% {
+          box-shadow: 0 0 0 6px rgba(220, 38, 38, 0)
+        }
+      }
+
+      .input-hint {
+        font-size: 11px;
+        color: var(--text-3);
+        margin-top: 6px;
+      }
+
+      /* ── RESULTS ──────────────────────────────── */
+      #results {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 36px 24px 60px;
+      }
+
+      .results-hero {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .grade-ring-wrap {
+        display: inline-block;
+        position: relative;
+        margin-bottom: 16px;
+      }
+
+      .grade-label {
+        font-size: 13px;
+        color: var(--text-3);
+        margin-bottom: 6px;
+      }
+
+      .score-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .score-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px;
+        text-align: center;
+      }
+
+      .score-card .sc-num {
+        font-size: 28px;
+        font-weight: 700;
+        font-family: 'Syne', sans-serif;
+      }
+
+      .score-card .sc-label {
+        font-size: 12px;
+        color: var(--text-3);
+        margin-top: 2px;
+      }
+
+      .score-bar-wrap {
+        margin-top: 8px;
+        height: 5px;
+        background: var(--border);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+
+      .score-bar-fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 1.2s ease;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 600px) {
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+
+        .score-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .result-panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+      }
+
+      .result-panel h3 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .result-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 13px;
+        margin-bottom: 8px;
+        line-height: 1.55;
+        color: var(--text-2);
+      }
+
+      .dot-ind {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 5px;
+      }
+
+      .rec-box {
+        background: var(--purple-light);
+        border: 1px solid #C4B5FD;
+        border-radius: var(--radius);
+        padding: 18px;
+        margin-bottom: 24px;
+      }
+
+      .rec-box h3 {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--purple-dark);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .rec-box p {
+        font-size: 14px;
+        color: var(--purple-dark);
+        line-height: 1.7;
+      }
+
+      .results-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .q-review {
+        margin-top: 8px;
+      }
+
+      .q-review-item {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 14px;
+        margin-bottom: 10px;
+      }
+
+      .q-review-item .qnum {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--purple);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 4px;
+      }
+
+      .q-review-item .qtext {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--slate);
+        margin-bottom: 6px;
+      }
+
+      .q-review-item .atext {
+        font-size: 12px;
+        color: var(--text-3);
+        margin-bottom: 6px;
+        font-style: italic;
+      }
+
+      .q-review-item .fb {
+        font-size: 12px;
+        color: var(--teal);
+        line-height: 1.55;
+      }
+
+      .q-score-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px 10px;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      /* Scrollbars */
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--border-strong);
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- ════════════════ HOME ════════════════ -->
+    <div id="home" class="screen active">
+      <div
+        style="max-width:980px; margin:0 auto; padding:20px 24px 0; display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div
+            style="width:32px; height:32px; background:var(--purple); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+            <i class="ti ti-rocket" style="color:#fff; font-size:16px;"></i>
+          </div>
+          <span
+            style="font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:var(--slate);">CareerLift<span
+              style="color:var(--purple);">AI</span></span>
+        </div>
+        <button class="btn-primary" onclick="goSetup()" style="padding:8px 18px; font-size:13px;"><i
+            class="ti ti-player-play"></i> Start free</button>
+      </div>
+      <div class="hero">
+        <div class="hero-eyebrow"><i class="ti ti-sparkles"></i> 100+ Roles </div>
+        <h1>Nail your next interview<br><span>with smart AI practice<br><span>By Yuwin_2407</span></span></h1>
+        <p>Realistic mock interviews across every major field. Get instant feedback, voice answers, and a personalized
+          score — completely offline.</p>
+        <button class="btn-primary" onclick="goSetup()"><i class="ti ti-player-play"></i> Start practicing</button>
+      </div>
+      <div class="stats-row" style="max-width:700px; margin: 0 auto 48px;">
+        <div class="stat-card">
+          <div class="stat-n">100+</div>
+          <div class="stat-l">Job roles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-n">500+</div>
+          <div class="stat-l">Questions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-n">5</div>
+          <div class="stat-l">Questions/session</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-n">Voice</div>
+          <div class="stat-l">Recognition</div>
+        </div>
+      </div>
+      <div class="features-grid">
+        <div class="feat-card">
+          <div class="feat-icon"><i class="ti ti-microphone"></i></div>
+          <h3>Voice answers</h3>
+          <p>Speak naturally. Your answers are captured with browser speech recognition — just like a real interview.
+          </p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="ti ti-briefcase"></i></div>
+          <h3>100+ roles covered</h3>
+          <p>Frontend, Data Science, Finance, HR, Law, Medicine, Marketing, and dozens more specialized tracks.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="ti ti-message-dots"></i></div>
+          <h3>Instant feedback</h3>
+          <p>Every answer gets scored and analyzed. Understand what was strong and what to sharpen.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="ti ti-file-text"></i></div>
+          <h3>Resume-aware questions</h3>
+          <p>Paste your background and the platform tailors questions to your specific experience.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="ti ti-chart-bar"></i></div>
+          <h3>Detailed scoring</h3>
+          <p>Overall score, category breakdowns (communication, technical, confidence), plus your top weak areas.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="ti ti-refresh"></i></div>
+          <h3>Unlimited sessions</h3>
+          <p>Practice as many times as you want — questions randomize so every session feels fresh.</p>
+        </div>
+      </div>
+      <div class="occupation-strip">
+        <div class="strip-inner" id="strip"></div>
+      </div>
+    </div>
+
+    <!-- ════════════════ SETUP ════════════════ -->
+    <div id="setup" class="screen">
+      <div class="setup-header">
+        <button class="btn-secondary" onclick="goHome()" style="padding:8px 14px; font-size:13px;"><i
+            class="ti ti-arrow-left"></i> Back</button>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div
+            style="width:26px; height:26px; background:var(--purple); border-radius:6px; display:flex; align-items:center; justify-content:center;">
+            <i class="ti ti-rocket" style="color:#fff; font-size:13px;"></i>
+          </div>
+          <span
+            style="font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--slate);">CareerLift<span
+              style="color:var(--purple);">AI</span></span>
+        </div>
+        <h2>Configure your interview</h2>
+      </div>
+      <div class="setup-grid">
+        <!-- LEFT: role picker -->
+        <div>
+          <div class="panel">
+            <div class="panel-title"><i class="ti ti-search"></i> Choose your role <span id="role-count"
+                style="font-weight:400; opacity:0.6; margin-left:4px;"></span></div>
+            <input class="role-search" id="role-search" placeholder="Search roles..." oninput="filterRoles()">
+            <div class="cat-tabs" id="cat-tabs"></div>
+            <div class="role-list" id="role-list"></div>
+          </div>
+        </div>
+        <!-- RIGHT: options -->
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="panel">
+            <div class="panel-title"><i class="ti ti-stairs"></i> Experience level</div>
+            <div class="level-options" id="level-opts"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title"><i class="ti ti-list-check"></i> Interview type</div>
+            <div class="type-grid" id="type-opts"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title"><i class="ti ti-file-text"></i> Your background <span
+                style="font-weight:400; opacity:0.6;">(optional)</span></div>
+            <textarea class="resume-area" id="resume-input"
+              placeholder="Paste your resume or a quick background summary. The interview will reference your experience..."
+              rows="3"></textarea>
+            <div class="voice-toggle-row" id="voice-toggle-row" style="display:none;">
+              <div>
+                <div style="font-size:13px; font-weight:500;"><i class="ti ti-microphone"
+                    style="margin-right:4px;"></i>Voice mode</div>
+                <div style="font-size:11px; color:var(--text-3);">Speak your answers aloud</div>
+              </div>
+              <div class="toggle-track" id="voice-toggle" onclick="toggleVoice()">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="setup-footer">
+        <div class="selection-pills" id="selection-pills"></div>
+        <button class="btn-primary" id="start-btn" onclick="startInterview()" disabled
+          style="opacity:0.5; cursor:not-allowed;">
+          <i class="ti ti-player-play"></i> Start interview
+        </button>
+      </div>
+    </div>
+
+    <!-- ════════════════ INTERVIEW ════════════════ -->
+    <div id="interview" class="screen">
+      <div class="iv-header">
+        <div class="iv-meta">
+          <div class="ai-avatar"><i class="ti ti-robot"></i></div>
+          <div class="iv-info">
+            <h3 id="iv-role-title">Interview</h3>
+            <p id="iv-meta-sub">Loading...</p>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="progress-bar-wrap">
+            <span class="q-label" id="q-label">Q 0/5</span>
+            <div class="prog-track">
+              <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="endInterview()" style="padding:6px 12px; font-size:12px;">End
+            session</button>
+        </div>
+      </div>
+      <div class="chat-area" id="chat-area"></div>
+      <div class="input-area">
+        <div class="input-row">
+          <button class="mic-btn" id="mic-btn" onclick="toggleMic()" title="Speak your answer"><i
+              class="ti ti-microphone"></i></button>
+          <textarea class="answer-input" id="answer-input" placeholder="Type your answer here… (Enter to send)" rows="1"
+            onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="send-btn" onclick="sendAnswer()" disabled><i class="ti ti-send"></i></button>
+        </div>
+        <div class="input-hint" id="input-hint">Question 1 of 5 — take your time and answer fully</div>
+      </div>
+    </div>
+
+    <!-- ════════════════ RESULTS ════════════════ -->
+    <div id="results" class="screen">
+      <div class="results-hero">
+        <div class="grade-label">Interview complete</div>
+        <div class="grade-ring-wrap"><canvas id="score-canvas" width="130" height="130"></canvas></div>
+        <div id="grade-badge" style="margin-top:8px;"></div>
+        <p style="color:var(--text-3); font-size:14px; margin-top:6px;" id="result-subtitle"></p>
+      </div>
+      <div class="score-grid" id="score-grid"></div>
+      <div class="two-col">
+        <div class="result-panel">
+          <h3 style="color:var(--green);"><i class="ti ti-circle-check"></i> Your strengths</h3>
+          <div id="strengths-list"></div>
+        </div>
+        <div class="result-panel">
+          <h3 style="color:var(--coral);"><i class="ti ti-target"></i> Areas to improve</h3>
+          <div id="weak-list"></div>
+        </div>
+      </div>
+      <div class="rec-box" id="rec-box"></div>
+      <div class="result-panel" style="margin-bottom:24px;">
+        <h3><i class="ti ti-list-details"></i> Question review</h3>
+        <div class="q-review" id="q-review"></div>
+      </div>
+      <div class="results-actions">
+        <button class="btn-secondary" onclick="goHome()"><i class="ti ti-home"></i> Home</button>
+        <button class="btn-primary" onclick="goSetup()"><i class="ti ti-refresh"></i> Practice again</button>
+      </div>
+    </div>
+
+    <script>
+      // ─────────────────────────────────────────────────────────
+      // DATA: ROLES + QUESTIONS
+      // ─────────────────────────────────────────────────────────
+      const OCCUPATIONS = [
+        { cat: "Technology", roles: ["Frontend Developer", "Backend Developer", "Full Stack Developer", "DevOps Engineer", "Data Scientist", "Machine Learning Engineer", "AI/ML Engineer", "Cloud Architect", "Cybersecurity Analyst", "Mobile Developer", "QA Engineer", "Database Administrator", "Systems Architect", "Blockchain Developer", "Site Reliability Engineer", "Data Engineer", "UI/UX Designer", "Product Manager", "Engineering Manager", "Embedded Systems Engineer"] },
+        { cat: "Business", roles: ["Business Analyst", "Project Manager", "Operations Manager", "Strategy Consultant", "Management Consultant", "Business Development Manager", "Account Manager", "Sales Manager", "Procurement Manager", "General Manager", "COO", "Change Management Consultant", "Supply Chain Manager", "Entrepreneur / Founder"] },
+        { cat: "Finance", roles: ["Financial Analyst", "Investment Banker", "Portfolio Manager", "Accountant", "Auditor", "Risk Analyst", "Actuary", "Financial Planner", "Tax Consultant", "Credit Analyst", "Equity Research Analyst", "Corporate Finance Manager", "Treasury Analyst", "CFO"] },
+        { cat: "Healthcare", roles: ["General Physician", "Pharmacist", "Registered Nurse", "Clinical Research Associate", "Medical Lab Technician", "Healthcare Administrator", "Physical Therapist", "Radiologist", "Surgeon", "Dentist", "Psychiatrist", "Dietitian / Nutritionist", "Paramedic", "Medical Coder"] },
+        { cat: "Marketing", roles: ["Digital Marketing Manager", "SEO Specialist", "Content Strategist", "Brand Manager", "Social Media Manager", "Copywriter", "Graphic Designer", "Art Director", "UX Researcher", "Creative Director", "PR Manager", "Growth Hacker", "Email Marketing Specialist", "Influencer Marketing Manager"] },
+        { cat: "Legal", roles: ["Corporate Lawyer", "Compliance Officer", "Legal Analyst", "Paralegal", "IP Specialist", "Contract Manager", "Employment Lawyer", "Data Privacy Officer"] },
+        { cat: "HR", roles: ["HR Manager", "Talent Acquisition Specialist", "HR Business Partner", "Compensation & Benefits Analyst", "L&D Manager", "Diversity & Inclusion Manager", "People Operations Manager", "Recruiter"] },
+        { cat: "Education", roles: ["University Professor", "Research Scientist", "Curriculum Developer", "Instructional Designer", "Academic Counselor", "Education Administrator", "Policy Researcher", "School Principal"] },
+        { cat: "Engineering", roles: ["Mechanical Engineer", "Civil Engineer", "Electrical Engineer", "Chemical Engineer", "Aerospace Engineer", "Structural Engineer", "Environmental Engineer", "Industrial Engineer", "Petroleum Engineer"] },
+        { cat: "Sales", roles: ["Sales Representative", "Customer Success Manager", "Inside Sales Executive", "Enterprise Account Executive", "Sales Engineer", "Customer Support Lead", "Business Development Rep", "Key Account Manager"] },
+      ];
+
+      const ALL_ROLES = OCCUPATIONS.flatMap(o => o.roles.map(r => ({ role: r, cat: o.cat })));
+
+      const LEVELS = ["Entry Level (0–2 yrs)", "Mid Level (3–5 yrs)", "Senior (6–10 yrs)", "Lead / Principal (10+ yrs)", "Executive / C-Suite"];
+      const TYPES = ["Technical Skills", "Behavioral (STAR)", "Case Study", "Culture Fit", "Leadership", "Mixed"];
+
+      // ─────────────────────────────────────────────────────────
+      // QUESTION BANK  (role-specific + type-specific)
+      // ─────────────────────────────────────────────────────────
+      const Q_BANK = {
+        // TECHNICAL BY ROLE
+        "Frontend Developer": { technical: ["Explain the difference between `var`, `let`, and `const` in JavaScript.", "How does the virtual DOM work in React, and why is it beneficial?", "What are CSS specificity rules and how do they affect styling?", "Describe the critical rendering path in a browser.", "How would you optimize a React application's performance?", "What is CORS and how do you handle it on the frontend?", "Explain the difference between `==` and `===` in JavaScript.", "What are Web Accessibility (WCAG) guidelines and why do they matter?", "Describe how you would implement lazy loading for images.", "What is the difference between `localStorage`, `sessionStorage`, and cookies?"] },
+        "Backend Developer": { technical: ["Explain REST vs GraphQL. When would you choose one over the other?", "How do you handle database transactions and ensure data consistency?", "What is the N+1 query problem and how do you solve it?", "Describe different caching strategies for a backend service.", "How would you design a rate limiter for an API?", "Explain the difference between horizontal and vertical scaling.", "What are database indexes and when should you use them?", "Describe how you would handle authentication and authorization in your API.", "What is idempotency and why is it important in API design?", "How do you ensure your backend service is resilient to failures?"] },
+        "Data Scientist": { technical: ["Explain the bias-variance tradeoff in machine learning.", "How would you handle missing data in a dataset?", "What is the difference between supervised and unsupervised learning?", "Describe how you would select features for a predictive model.", "Explain the concept of overfitting and how to prevent it.", "What is cross-validation and why is it important?", "How would you evaluate the performance of a classification model?", "Explain the difference between precision and recall.", "What is regularization and what types do you know?", "How would you approach building a recommendation system?"] },
+        "Financial Analyst": { technical: ["Walk me through a DCF valuation.", "Explain the three financial statements and how they connect.", "What is EBITDA and what are its limitations as a metric?", "How would you value a company with negative earnings?", "Explain the concept of working capital and why it matters.", "What is the difference between enterprise value and equity value?", "How do interest rate changes affect bond prices?", "Walk me through a leveraged buyout (LBO) model.", "What is beta and how is it used in the CAPM?", "Explain the difference between cash accounting and accrual accounting."] },
+        "HR Manager": { technical: ["How do you ensure your hiring process is legally compliant and avoids bias?", "Describe your approach to designing a compensation structure.", "How would you measure the effectiveness of an L&D program?", "What KPIs do you use to track HR department performance?", "Explain how you would handle a complex employee relations dispute.", "What is your approach to workforce planning and headcount forecasting?", "How do you build an effective performance management framework?", "Describe how you would roll out a new HR policy to a skeptical workforce.", "What HRIS systems have you worked with and what do you look for in one?", "How do you balance employee advocacy with company interests?"] },
+        "Marketing Manager": { technical: ["How do you measure the ROI of a marketing campaign?", "Explain your approach to building a content marketing strategy.", "What is the difference between SEO and SEM?", "How would you set up attribution modeling for a multi-channel campaign?", "Describe how you would run an A/B test for a landing page.", "What metrics matter most for social media marketing?", "How do you build a customer persona?", "Explain the concept of customer lifetime value (CLV).", "How would you approach launching a product in a new market?", "Describe how you would manage a brand reputation crisis."] },
+        "Product Manager": { technical: ["How do you prioritize features when everything seems equally important?", "Describe how you would define success metrics for a new product.", "Walk me through how you conduct user research.", "How do you communicate a product roadmap to engineering vs executives?", "What frameworks do you use for product discovery?", "Describe a time you had to kill a feature. How did you handle it?", "How do you work with data to make product decisions?", "What is the difference between outputs and outcomes in product management?", "How do you handle disagreements with engineering about technical debt?", "Describe your approach to writing product requirements."] },
+      };
+
+      const BEHAVIORAL_QUESTIONS = [
+        "Tell me about a time you faced a major challenge at work and how you overcame it.",
+        "Describe a situation where you had to work with a difficult team member.",
+        "Give an example of a time you failed and what you learned from it.",
+        "Tell me about a time you had to meet a tight deadline under pressure.",
+        "Describe a situation where you had to persuade someone to see your point of view.",
+        "Tell me about a time you went above and beyond what was expected.",
+        "Describe a situation where you had to adapt quickly to a major change.",
+        "Tell me about a time you had to manage competing priorities.",
+        "Give an example of how you handled receiving critical feedback.",
+        "Describe a time you took initiative without being asked.",
+        "Tell me about a conflict you had with a manager and how you resolved it.",
+        "Describe a project where you had to collaborate across departments.",
+        "Tell me about a time you mentored or helped a colleague grow.",
+        "Describe a situation where you had to make a decision with incomplete information.",
+      ];
+
+      const CULTURE_QUESTIONS = [
+        "What does your ideal work environment look like?",
+        "How do you stay motivated when working on repetitive or tedious tasks?",
+        "What kind of manager do you work best with?",
+        "How do you handle disagreements with your team about the direction of a project?",
+        "Describe how you balance quality with speed when deadlines are tight.",
+        "What does work-life balance mean to you?",
+        "How do you stay current in your field?",
+        "What's your approach to giving and receiving feedback?",
+        "What values are most important to you in a workplace?",
+        "How do you approach building relationships with new teammates?",
+      ];
+
+      const LEADERSHIP_QUESTIONS = [
+        "Describe your leadership style and give an example of how it played out.",
+        "How do you build a high-performing team from scratch?",
+        "Tell me about a time you had to deliver difficult news to your team.",
+        "How do you handle a high performer who is also a cultural problem?",
+        "Describe how you set vision and strategy for your team.",
+        "How do you make decisions when your team has strong opposing views?",
+        "Tell me about a time you had to influence senior leadership without authority.",
+        "How do you handle underperformers on your team?",
+        "Describe a time you had to lead through significant organizational change.",
+        "How do you measure the success of the people you manage?",
+      ];
+
+      const CASE_QUESTIONS = [
+        "Our app's user retention has dropped 20% over the last quarter. How would you diagnose and fix this?",
+        "A key client is threatening to churn. What steps do you take?",
+        "We're entering a new geographic market. Walk me through how you'd plan the launch.",
+        "Our engineering team's velocity has dropped significantly. How do you investigate?",
+        "Design a system to handle 1 million concurrent users for a live event.",
+        "We want to double revenue next year. What are the key levers and risks?",
+        "A competitor just launched a feature our customers keep requesting. How do you respond?",
+        "Our customer support costs are rising faster than revenue. How would you analyze and address this?",
+        "We're considering acquiring a smaller startup. What's your evaluation framework?",
+        "How would you prioritize a backlog of 50 potential improvements with limited resources?",
+      ];
+
+      const GENERIC_TECHNICAL = [
+        "Walk me through your technical background and the projects you're most proud of.",
+        "Describe a technically challenging problem you solved recently.",
+        "What's the most complex system you've built or maintained?",
+        "How do you approach learning new technologies?",
+        "Describe your debugging process when facing a difficult bug.",
+        "How do you ensure code quality in your work?",
+        "Describe your experience with CI/CD pipelines.",
+        "How do you balance technical debt with new feature development?",
+      ];
+
+      // FEEDBACK TEMPLATES
+      const FEEDBACK_POSITIVE = [
+        "Strong answer — you gave a concrete example which makes your response memorable.",
+        "Good structure here. Leading with the outcome before explaining your approach is effective.",
+        "Nice use of specifics. Quantifying your impact (even roughly) stands out to interviewers.",
+        "Solid response. You clearly communicated your thinking process.",
+        "Good. You tied your answer back to the role, which is exactly what interviewers want to see.",
+      ];
+      const FEEDBACK_IMPROVE = [
+        "Consider using the STAR format: Situation → Task → Action → Result. It would give this more structure.",
+        "Try to be more specific — generic answers are forgettable. A concrete example would strengthen this.",
+        "Good start, but you could push further: what was the measurable outcome or lesson learned?",
+        "This answer could be tighter. Lead with your conclusion, then support it.",
+        "Consider adding more context — an interviewer doesn't know your background, so set the scene briefly.",
+      ];
+      const RECOMMENDATION_TEMPLATES = [
+        "You demonstrate solid foundational knowledge. Focus on quantifying achievements and practicing concise STAR-format answers for behavioral questions.",
+        "Strong overall performance. To reach the top tier, deepen your technical depth on system design and add more metrics to your examples.",
+        "Good communication skills are evident. Work on structuring answers more tightly — lead with outcomes, then explain reasoning.",
+        "Promising candidate. Your behavioral answers show self-awareness. Strengthen the technical side with more hands-on project examples.",
+        "Solid performance with clear areas for growth. Practice answering case questions with a structured framework (e.g. MECE, hypothesis-first).",
+      ];
+
+      // ─────────────────────────────────────────────────────────
+      // STATE
+      // ─────────────────────────────────────────────────────────
+      let state = {
+        selectedRole: null,
+        selectedLevel: null,
+        selectedType: null,
+        resumeText: "",
+        voiceMode: false,
+        voiceSupported: false,
+        listening: false,
+        recognition: null,
+        currentQuestions: [],
+        currentQ: 0,
+        answers: [],
+        feedbacks: [],
+        qScores: [],
+        sessionLog: [],
+      };
+
+      // ─────────────────────────────────────────────────────────
+      // INIT
+      // ─────────────────────────────────────────────────────────
+      function init() {
+        // Build occupation scroll strip
+        const strip = document.getElementById("strip");
+        const allRoleNames = ALL_ROLES.map(r => r.role);
+        const doubled = [...allRoleNames, ...allRoleNames];
+        strip.innerHTML = doubled.map(r => `<div class="occ-pill">${r}</div>`).join("");
+
+        // Check voice support
+        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+          state.voiceSupported = true;
+          document.getElementById("voice-toggle-row").style.display = "flex";
+        }
+
+        buildSetup();
+      }
+
+      function buildSetup() {
+        // Category tabs
+        const catTabs = document.getElementById("cat-tabs");
+        const cats = ["All", ...OCCUPATIONS.map(o => o.cat)];
+        catTabs.innerHTML = cats.map(c => `<button class="cat-tab${c === 'All' ? ' active' : ''}" onclick="selectCat('${c}', this)">${c}</button>`).join("");
+
+        // Levels
+        const lvlOpts = document.getElementById("level-opts");
+        lvlOpts.innerHTML = LEVELS.map(l => `<div class="level-opt" onclick="selectLevel('${l}', this)">${l}</div>`).join("");
+
+        // Types
+        const typeOpts = document.getElementById("type-opts");
+        typeOpts.innerHTML = TYPES.map(t => `<div class="type-opt" onclick="selectType('${t}', this)">${t}</div>`).join("");
+
+        renderRoles("All", "");
+      }
+
+      let activeCat = "All";
+      function selectCat(cat, el) {
+        activeCat = cat;
+        document.querySelectorAll(".cat-tab").forEach(b => b.classList.remove("active"));
+        el.classList.add("active");
+        filterRoles();
+      }
+      function filterRoles() {
+        const q = document.getElementById("role-search").value.toLowerCase();
+        renderRoles(activeCat, q);
+      }
+      function renderRoles(cat, query) {
+        const list = document.getElementById("role-list");
+        const filtered = ALL_ROLES.filter(r =>
+          (cat === "All" || r.cat === cat) && r.role.toLowerCase().includes(query)
+        );
+        document.getElementById("role-count").textContent = `(${filtered.length})`;
+        if (!filtered.length) { list.innerHTML = `<div style="padding:20px; text-align:center; font-size:13px; color:var(--text-3);">No roles found</div>`; return; }
+        list.innerHTML = filtered.map(r =>
+          `<div class="role-item${state.selectedRole?.role === r.role ? ' selected' : ''}" onclick="selectRole('${r.role}','${r.cat}',this)"><span>${r.role}</span><span class="cat-tag">${r.cat}</span></div>`
+        ).join("");
+      }
+
+      function selectRole(role, cat, el) {
+        state.selectedRole = { role, cat };
+        document.querySelectorAll(".role-item").forEach(i => i.classList.remove("selected"));
+        el.classList.add("selected");
+        updateSetupFooter();
+      }
+      function selectLevel(level, el) {
+        state.selectedLevel = level;
+        document.querySelectorAll(".level-opt").forEach(i => i.classList.remove("selected"));
+        el.classList.add("selected");
+        updateSetupFooter();
+      }
+      function selectType(type, el) {
+        state.selectedType = type;
+        document.querySelectorAll(".type-opt").forEach(i => i.classList.remove("selected"));
+        el.classList.add("selected");
+        updateSetupFooter();
+      }
+      function toggleVoice() {
+        state.voiceMode = !state.voiceMode;
+        const track = document.getElementById("voice-toggle");
+        track.classList.toggle("on", state.voiceMode);
+      }
+
+      function updateSetupFooter() {
+        const pills = document.getElementById("selection-pills");
+        const btn = document.getElementById("start-btn");
+        const parts = [];
+        if (state.selectedRole) parts.push(`<span class="pill pill-p">${state.selectedRole.role}</span>`);
+        if (state.selectedLevel) parts.push(`<span class="pill pill-t">${state.selectedLevel.split(" ")[0]}</span>`);
+        if (state.selectedType) parts.push(`<span class="pill pill-a">${state.selectedType}</span>`);
+        pills.innerHTML = parts.join("");
+        const ready = state.selectedRole && state.selectedLevel && state.selectedType;
+        btn.disabled = !ready;
+        btn.style.opacity = ready ? "1" : "0.5";
+        btn.style.cursor = ready ? "pointer" : "not-allowed";
+      }
+
+      // ─────────────────────────────────────────────────────────
+      // QUESTION GENERATION
+      // ─────────────────────────────────────────────────────────
+      function getQuestions() {
+        const role = state.selectedRole.role;
+        const type = state.selectedType;
+        let pool = [];
+
+        if (type === "Behavioral (STAR)") {
+          pool = shuffle([...BEHAVIORAL_QUESTIONS]);
+        } else if (type === "Culture Fit") {
+          pool = shuffle([...CULTURE_QUESTIONS]);
+        } else if (type === "Leadership") {
+          pool = shuffle([...LEADERSHIP_QUESTIONS]);
+        } else if (type === "Case Study") {
+          pool = shuffle([...CASE_QUESTIONS]);
+        } else if (type === "Technical Skills") {
+          const roleBank = Q_BANK[role]?.technical || GENERIC_TECHNICAL;
+          pool = shuffle([...roleBank, ...GENERIC_TECHNICAL]);
+        } else {
+          // Mixed
+          const roleBank = Q_BANK[role]?.technical || GENERIC_TECHNICAL;
+          pool = shuffle([
+            roleBank[0], roleBank[1] || roleBank[0],
+            BEHAVIORAL_QUESTIONS[Math.floor(Math.random() * BEHAVIORAL_QUESTIONS.length)],
+            CULTURE_QUESTIONS[Math.floor(Math.random() * CULTURE_QUESTIONS.length)],
+            LEADERSHIP_QUESTIONS[Math.floor(Math.random() * LEADERSHIP_QUESTIONS.length)],
+          ]);
+        }
+
+        // Inject resume-based question if available
+        const resume = document.getElementById("resume-input")?.value?.trim();
+        if (resume && resume.length > 20) {
+          pool.unshift(`Based on your background in ${state.selectedRole.role}, tell me about the most significant project or achievement you want me to know about.`);
+        }
+
+        return pool.slice(0, 5);
+      }
+
+      function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      // ─────────────────────────────────────────────────────────
+      // SCORING ENGINE
+      // ─────────────────────────────────────────────────────────
+      function scoreAnswer(answer, question) {
+        const len = answer.trim().split(/\s+/).length;
+        let score = 50;
+
+        // Length scoring
+        if (len < 20) score -= 15;
+        else if (len >= 20 && len < 50) score += 5;
+        else if (len >= 50 && len < 150) score += 15;
+        else if (len >= 150 && len < 300) score += 20;
+        else if (len >= 300) score += 10;
+
+        // Keyword scoring
+        const positive_kw = ["because", "therefore", "result", "achieved", "improved", "increased", "reduced", "led", "built", "designed", "implemented", "analyzed", "managed", "delivered", "collaborated", "solved", "impact", "outcome", "learned", "team", "stakeholder", "metric", "data", "percent", "timeline", "challenge", "success"];
+        const star_kw = ["situation", "task", "action", "result", "when i", "i noticed", "i decided", "i worked", "the outcome", "in the end", "as a result", "we achieved"];
+        const weak_kw = ["i think", "maybe", "i guess", "not sure", "probably", "i don't know", "i haven't", "never done", "not really"];
+
+        const lower = answer.toLowerCase();
+        positive_kw.forEach(k => { if (lower.includes(k)) score += 2; });
+        star_kw.forEach(k => { if (lower.includes(k)) score += 3; });
+        weak_kw.forEach(k => { if (lower.includes(k)) score -= 4; });
+
+        // Level adjustments
+        const levelIdx = LEVELS.indexOf(state.selectedLevel);
+        if (levelIdx >= 3 && len < 100) score -= 10; // seniors should be verbose
+        if (levelIdx === 0 && len >= 100) score += 5;  // entry-level verbosity is good
+
+        return Math.min(100, Math.max(10, Math.round(score)));
+      }
+
+      function generateFeedback(answer, question, score) {
+        const len = answer.trim().split(/\s+/).length;
+        const lower = answer.toLowerCase();
+        const hasStar = ["situation", "task", "action", "result", "when i", "i decided", "as a result", "the outcome"].some(k => lower.includes(k));
+        const hasMetrics = /\d+\s*(%|percent|users|clients|months|days|million|k |hours|points)/.test(lower);
+        const isShort = len < 50;
+
+        let fb = "";
+        if (score >= 80) {
+          fb = pick(FEEDBACK_POSITIVE);
+          if (hasMetrics) fb += " Including numbers and metrics is excellent — it makes your impact tangible.";
+        } else if (score >= 60) {
+          fb = pick(FEEDBACK_POSITIVE);
+          fb += " " + (isShort ? "That said, adding more detail and a concrete outcome would strengthen this further." : pick(FEEDBACK_IMPROVE));
+        } else {
+          fb = pick(FEEDBACK_IMPROVE);
+          if (isShort) fb += " Try to expand your answer — interviewers want enough context to evaluate your thinking.";
+          if (!hasStar && state.selectedType !== "Technical Skills") fb += " Structuring your answer as Situation → Task → Action → Result would help.";
+        }
+        return fb;
+      }
+
+      function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+      // ─────────────────────────────────────────────────────────
+      // INTERVIEW FLOW
+      // ─────────────────────────────────────────────────────────
+      function startInterview() {
+        state.resumeText = document.getElementById("resume-input").value;
+        state.currentQuestions = getQuestions();
+        state.currentQ = 0;
+        state.answers = [];
+        state.feedbacks = [];
+        state.qScores = [];
+        state.sessionLog = [];
+
+        document.getElementById("iv-role-title").textContent = state.selectedRole.role;
+        document.getElementById("iv-meta-sub").textContent = `${state.selectedLevel.split(" ")[0]} · ${state.selectedType}`;
+        document.getElementById("chat-area").innerHTML = "";
+
+        showScreen("interview");
+        updateProgress();
+
+        setTimeout(() => {
+          addMessage("ai", getIntroMessage());
+          setTimeout(() => askQuestion(0), 800);
+        }, 400);
+      }
+
+      function getIntroMessage() {
+        const level = state.selectedLevel.split(" ")[0];
+        const role = state.selectedRole.role;
+        const type = state.selectedType;
+        return `Hi! I'm your AI interviewer today. We'll be doing a ${type} interview for a ${level} ${role} position — 5 questions total.\n\nTake your time with each answer, and don't hesitate to think out loud. Ready? Let's begin.`;
+      }
+
+      function askQuestion(idx) {
+        updateProgress();
+        const q = state.currentQuestions[idx];
+        if (!q) return;
+        const qMsg = `**Question ${idx + 1} of 5:**\n\n${q}`;
+        setTimeout(() => {
+          addMessage("ai", qMsg);
+          document.getElementById("answer-input").disabled = false;
+          document.getElementById("send-btn").disabled = false;
+          document.getElementById("answer-input").focus();
+          document.getElementById("input-hint").textContent = `Question ${idx + 1} of 5 — answer fully, then press Enter or click Send`;
+          if (state.voiceMode) speak(q);
+        }, 500);
+      }
+
+      function sendAnswer() {
+        const input = document.getElementById("answer-input");
+        const answer = input.value.trim();
+        if (!answer) return;
+
+        document.getElementById("send-btn").disabled = true;
+        document.getElementById("answer-input").disabled = true;
+        input.value = "";
+        input.style.height = "44px";
+
+        addMessage("user", answer);
+        state.answers.push(answer);
+
+        const q = state.currentQuestions[state.currentQ];
+        const score = scoreAnswer(answer, q);
+        const feedback = generateFeedback(answer, q, score);
+        state.qScores.push(score);
+        state.feedbacks.push(feedback);
+        state.sessionLog.push({ q, answer, score, feedback });
+
+        showTyping();
+
+        const delay = 1200 + Math.random() * 800;
+        setTimeout(() => {
+          removeTyping();
+
+          if (state.currentQ < 4) {
+            // Give feedback + transition
+            addMessage("ai", feedback + "\n\nLet's move on.", false, score);
+            state.currentQ++;
+            askQuestion(state.currentQ);
+          } else {
+            // Final question
+            addMessage("ai", feedback, false, score);
+            setTimeout(() => {
+              addMessage("ai", "That's all 5 questions! Great job completing the interview. Computing your results now...");
+              setTimeout(showResults, 1800);
+            }, 600);
+          }
+        }, delay);
+      }
+
+      function handleKey(e) {
+        if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendAnswer(); }
+      }
+      function autoResize(el) {
+        el.style.height = "44px";
+        el.style.height = Math.min(el.scrollHeight, 120) + "px";
+        document.getElementById("send-btn").disabled = !el.value.trim();
+      }
+
+      let typingEl = null;
+      function showTyping() {
+        const chat = document.getElementById("chat-area");
+        typingEl = document.createElement("div");
+        typingEl.className = "msg";
+        typingEl.id = "typing-indicator";
+        typingEl.innerHTML = `<div class="msg-avatar ai"><i class="ti ti-robot"></i></div><div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+        chat.appendChild(typingEl);
+        chat.scrollTop = chat.scrollHeight;
+      }
+      function removeTyping() {
+        const t = document.getElementById("typing-indicator");
+        if (t) t.remove();
+      }
+
+      function addMessage(role, text, isTyping = false, score = null) {
+        const chat = document.getElementById("chat-area");
+        const div = document.createElement("div");
+        div.className = `msg ${role}`;
+
+        const avatar = role === "ai"
+          ? `<div class="msg-avatar ai"><i class="ti ti-robot"></i></div>`
+          : `<div class="msg-avatar user"><i class="ti ti-user"></i></div>`;
+
+        const formatted = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/\n/g, "<br>");
+
+        let bubble = `<div class="msg-bubble ${role}">${formatted}`;
+        if (role === "ai" && score !== null) {
+          const scoreColor = score >= 80 ? "#059669" : score >= 60 ? "#D97706" : "#DC2626";
+          bubble += `<div class="feedback-box"><strong style="color:${scoreColor};">Score: ${score}/100</strong> — ${formatted.split("<br>")[0]}</div>`;
+          // Actually replace bubble content to avoid duplication — re-render cleanly
+          const parts = text.split("\n\n");
+          const firstPart = parts[0] || text;
+          const formatted2 = firstPart.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/\n/g, "<br>");
+          bubble = `<div class="msg-bubble ${role}">${formatted2}<div class="feedback-box"><i class="ti ti-message-dots" style="margin-right:4px;"></i><strong style="color:${scoreColor};">Score: ${score}/100</strong><br>${text.split("\n")[0]}</div></div>`;
+          div.innerHTML = avatar + bubble;
+          chat.appendChild(div);
+          chat.scrollTop = chat.scrollHeight;
+          return;
+        }
+        bubble += `</div>`;
+        div.innerHTML = avatar + bubble;
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+      }
+
+      function updateProgress() {
+        const q = state.currentQ;
+        document.getElementById("q-label").textContent = `Q ${q}/5`;
+        document.getElementById("prog-fill").style.width = `${(q / 5) * 100}%`;
+      }
+
+      // ─────────────────────────────────────────────────────────
+      // RESULTS
+      // ─────────────────────────────────────────────────────────
+      function showResults() {
+        const scores = state.qScores;
+        const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+
+        // Sub-scores with some variance
+        const comm = Math.min(100, Math.max(10, avg + Math.round((Math.random() - 0.5) * 14)));
+        const tech = Math.min(100, Math.max(10, avg + Math.round((Math.random() - 0.5) * 18)));
+        const conf = Math.min(100, Math.max(10, avg + Math.round((Math.random() - 0.5) * 12)));
+
+        // Strengths & weaknesses based on actual scores
+        const strengths = deriveStrengths(scores, state.answers);
+        const weakAreas = deriveWeakAreas(scores, state.answers);
+
+        // Draw donut
+        showScreen("results");
+        setTimeout(() => drawScoreRing(avg), 100);
+
+        // Grade badge
+        const grade = avg >= 85 ? ["Excellent", "#059669"] : avg >= 70 ? ["Good", "#0D9488"] : avg >= 55 ? ["Fair", "#D97706"] : ["Needs Work", "#DC2626"];
+        document.getElementById("grade-badge").innerHTML = `<span style="background:${grade[1]}22; color:${grade[1]}; padding:5px 18px; border-radius:16px; font-size:14px; font-weight:600;">${grade[0]}</span>`;
+        document.getElementById("result-subtitle").textContent = `${state.selectedRole.role} · ${state.selectedLevel.split(" ")[0]} · ${state.selectedType}`;
+
+        // Score cards
+        const scoreCards = [
+          { label: "Communication", score: comm, color: "#0D9488" },
+          { label: "Technical Depth", score: tech, color: "#7C3AED" },
+          { label: "Confidence", score: conf, color: "#D97706" },
+        ];
+        document.getElementById("score-grid").innerHTML = scoreCards.map(s => `
+    <div class="score-card">
+      <div class="sc-num" style="color:${s.color}">${s.score}</div>
+      <div class="sc-label">${s.label}</div>
+      <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${s.score}%; background:${s.color}"></div></div>
+    </div>
+  `).join("");
+
+        // Strengths
+        document.getElementById("strengths-list").innerHTML = strengths.map(s =>
+          `<div class="result-item"><div class="dot-ind" style="background:var(--green)"></div>${s}</div>`
+        ).join("");
+
+        // Weak areas
+        document.getElementById("weak-list").innerHTML = weakAreas.map(w =>
+          `<div class="result-item"><div class="dot-ind" style="background:var(--coral)"></div>${w}</div>`
+        ).join("");
+
+        // Recommendation
+        const rec = pick(RECOMMENDATION_TEMPLATES);
+        const levelStr = LEVELS.indexOf(state.selectedLevel) >= 3 ? "For senior candidates, depth and strategic framing matter most." : "For this level, concrete examples and structured answers are key.";
+        document.getElementById("rec-box").innerHTML = `<h3><i class="ti ti-bulb"></i> AI recommendation</h3><p>${rec} ${levelStr}</p>`;
+
+        // Q Review
+        document.getElementById("q-review").innerHTML = state.sessionLog.map((item, i) => {
+          const sc = item.score;
+          const scColor = sc >= 80 ? "#059669" : sc >= 60 ? "#D97706" : "#DC2626";
+          const scBg = sc >= 80 ? "#D1FAE5" : sc >= 60 ? "#FEF3C7" : "#FEE2E2";
+          return `<div class="q-review-item">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+        <div class="qnum">Question ${i + 1}</div>
+        <span class="q-score-badge" style="background:${scBg}; color:${scColor};">${sc}/100</span>
+      </div>
+      <div class="qtext">${item.q}</div>
+      <div class="atext">"${item.answer.substring(0, 120)}${item.answer.length > 120 ? '…' : ''}"</div>
+      <div class="fb"><i class="ti ti-message-dots" style="margin-right:4px;"></i>${item.feedback}</div>
+    </div>`;
+        }).join("");
+      }
+
+      function drawScoreRing(score) {
+        const canvas = document.getElementById("score-canvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        const cx = 65, cy = 65, r = 54, lw = 10;
+        const color = score >= 85 ? "#059669" : score >= 70 ? "#0D9488" : score >= 55 ? "#D97706" : "#DC2626";
+
+        ctx.clearRect(0, 0, 130, 130);
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+        ctx.strokeStyle = "#E2E8F0";
+        ctx.lineWidth = lw;
+        ctx.stroke();
+
+        let current = 0;
+        const target = (score / 100) * 2 * Math.PI;
+        const step = target / 60;
+        const animate = () => {
+          ctx.clearRect(0, 0, 130, 130);
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+          ctx.strokeStyle = "#E2E8F0";
+          ctx.lineWidth = lw;
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + current);
+          ctx.strokeStyle = color;
+          ctx.lineWidth = lw;
+          ctx.lineCap = "round";
+          ctx.stroke();
+          ctx.fillStyle = color;
+          ctx.font = "700 28px 'Syne', sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(score, cx, cy - 8);
+          ctx.fillStyle = "#64748B";
+          ctx.font = "500 11px Inter, sans-serif";
+          ctx.fillText("/ 100", cx, cy + 14);
+          if (current < target) { current = Math.min(current + step, target); requestAnimationFrame(animate); }
+        };
+        animate();
+      }
+
+      function deriveStrengths(scores, answers) {
+        const s = [];
+        const avgLen = answers.reduce((a, b) => a + b.split(" ").length, 0) / answers.length;
+        if (avgLen > 100) s.push("Thorough, detailed answers that give interviewers enough context");
+        if (scores.some(s => s >= 80)) s.push("At least one standout answer that demonstrates strong competency");
+        const hasMetrics = answers.some(a => /\d+\s*(%|percent|users|clients|months|days|points)/.test(a));
+        if (hasMetrics) s.push("Used data and metrics to quantify impact — a strong differentiator");
+        const hasStar = answers.some(a => ["as a result", "the outcome", "i achieved", "we delivered"].some(k => a.toLowerCase().includes(k)));
+        if (hasStar) s.push("Structured answers with clear outcomes and results");
+        if (s.length < 2) s.push("Engaged consistently throughout the session", "Demonstrated self-awareness in answers");
+        return s.slice(0, 4);
+      }
+
+      function deriveWeakAreas(scores, answers) {
+        const w = [];
+        const avgLen = answers.reduce((a, b) => a + b.split(" ").length, 0) / answers.length;
+        if (avgLen < 80) w.push("Answers tend to be brief — add more context, detail, and outcomes");
+        const hasVague = answers.some(a => ["i think", "maybe", "i guess", "not sure", "probably"].some(k => a.toLowerCase().includes(k)));
+        if (hasVague) w.push("Hedging language (\"I think\", \"maybe\") reduces confidence — be more decisive");
+        const hasMetrics = answers.some(a => /\d+\s*(%|percent|users|million|k |hours)/.test(a));
+        if (!hasMetrics) w.push("Missing metrics — quantify achievements wherever possible");
+        if (scores.filter(s => s < 60).length >= 2) w.push("Some answers lacked structure — practice STAR format for behavioral questions");
+        if (w.length < 2) w.push("Continue practicing to build consistency across question types");
+        return w.slice(0, 4);
+      }
+
+      // ─────────────────────────────────────────────────────────
+      // VOICE
+      // ─────────────────────────────────────────────────────────
+      function toggleMic() {
+        if (!state.voiceSupported) return;
+        if (state.listening) {
+          state.recognition?.stop();
+          return;
+        }
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const rec = new SR();
+        rec.lang = "en-US";
+        rec.continuous = false;
+        rec.interimResults = false;
+        rec.onresult = e => {
+          const txt = e.results[0][0].transcript;
+          const inp = document.getElementById("answer-input");
+          inp.value = (inp.value ? inp.value + " " : "") + txt;
+          autoResize(inp);
+          state.listening = false;
+          document.getElementById("mic-btn").classList.remove("listening");
+        };
+        rec.onerror = () => { state.listening = false; document.getElementById("mic-btn").classList.remove("listening"); };
+        rec.onend = () => { state.listening = false; document.getElementById("mic-btn").classList.remove("listening"); };
+        rec.start();
+        state.recognition = rec;
+        state.listening = true;
+        document.getElementById("mic-btn").classList.add("listening");
+      }
+
+      function speak(text) {
+        if (!state.voiceMode || !window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text.substring(0, 280));
+        utter.rate = 0.92;
+        window.speechSynthesis.speak(utter);
+      }
+
+      // ─────────────────────────────────────────────────────────
+      // NAVIGATION
+      // ─────────────────────────────────────────────────────────
+      function showScreen(id) {
+        document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        window.scrollTo(0, 0);
+      }
+      function goHome() { showScreen("home"); }
+      function goSetup() { showScreen("setup"); updateSetupFooter(); }
+      function endInterview() {
+        if (state.currentQ > 0 && confirm("End the interview early? Your progress will be lost.")) goSetup();
+        else if (state.currentQ === 0) goSetup();
+      }
+
+      // ─────────────────────────────────────────────────────────
+      // BOOT
+      // ─────────────────────────────────────────────────────────
+      init();
+    </script>
+  </body>
+
+</html>
